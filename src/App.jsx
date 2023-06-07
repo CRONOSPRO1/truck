@@ -23,16 +23,6 @@ function App() {
       mtlLoader.load('src/assets/poly/poly.mtl', function (materials) {
         materials.preload();
 
-        // const floorGeometry = new THREE.PlaneGeometry(3, 3);
-        // const textureLoader = new THREE.TextureLoader();
-        // const floorTexture = textureLoader.load('./assets/poly/background.jpg');
-        // const floorMaterial = new THREE.MeshBasicMaterial({ map: floorTexture });
-        // const floorMesh = new THREE.Mesh(floorGeometry, floorMaterial);
-        // floorMesh.rotation.x = -Math.PI / 2;
-        // floorMesh.position.set(0, -0.13, 0); // Ajusta los valores según la cantidad de desplazamiento vertical deseado
-        // test.scene.add(floorMesh);
-    
-        
         const floorSize = 2.5;
         const floorGeometry = new THREE.PlaneGeometry(floorSize, floorSize);
         const textureLoader = new THREE.TextureLoader();
@@ -42,40 +32,6 @@ function App() {
         floorMesh.rotation.x = -Math.PI / 2;
         floorMesh.position.set(0, -0.13, 0);
         test.scene.add(floorMesh);
-    
-        // Crear las paredes
-        // const wallHeight = 3;
-        // const wallGeometry = new THREE.BoxGeometry(floorSize, wallHeight, 0.1);
-        // const wallTexture = textureLoader.load('./assets/poly/SKY.jpg')
-        // const wallMaterial = new THREE.MeshBasicMaterial({map:wallTexture})
-    
-        // const wallFront = new THREE.Mesh(wallGeometry, wallMaterial);
-        // wallFront.position.set(0, wallHeight / 2, -floorSize / 2 + 0.05);
-        // test.scene.add(wallFront);
-    
-        // const wallBack = new THREE.Mesh(wallGeometry, wallMaterial);
-        // wallBack.position.set(0, wallHeight / 2, floorSize / 2 - 0.05);
-        // test.scene.add(wallBack);
-    
-        // const wallLeft = new THREE.Mesh(wallGeometry, wallMaterial);
-        // wallLeft.position.set(-floorSize / 2 + 0.05, wallHeight / 2, 0);
-        // wallLeft.rotation.y = Math.PI / 2;
-        // test.scene.add(wallLeft);
-    
-        // const wallRight = new THREE.Mesh(wallGeometry, wallMaterial);
-        // wallRight.position.set(floorSize / 2 - 0.05, wallHeight / 2, 0);
-        // wallRight.rotation.y = Math.PI / 2;
-        // test.scene.add(wallRight);
-    
-        // // Crear el techo
-        // const roofGeometry = new THREE.PlaneGeometry(floorSize, floorSize);
-        // const roofMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
-        // const roofMesh = new THREE.Mesh(roofGeometry, roofMaterial);
-        // roofMesh.rotation.x = Math.PI / 2;
-        // roofMesh.position.set(0, wallHeight, 0);
-        // test.scene.add(roofMesh);
-    
-
 
         objLoader.setMaterials(materials);
         objLoader.load('src/assets/poly/poly.obj', function (object) {
@@ -126,6 +82,23 @@ function App() {
         test.scene.remove(point);
       });
     };
+  }, []);
+
+  useEffect(() => {
+    const loader = new THREE.GLTFLoader();
+    const scene = new THREE.Scene();
+
+    loader.load(
+      'assets/shiba/scene.gltf',
+      function (gltf) {
+        const model = gltf.scene;
+        scene.add(model);
+      },
+      undefined,
+      function (error) {
+        console.error('Error al cargar el modelo glTF', error);
+      }
+    );
   }, []);
 
   return (
